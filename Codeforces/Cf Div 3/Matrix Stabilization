@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+ 
+void stabilize(vector<vector<int>>& matrix, int n, int m) {
+    bool changed;
+    do {
+        changed = false;
+        vector<vector<int>> new_matrix = matrix;
+ 
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                int top = (i > 0) ? matrix[i - 1][j] : 0;
+                int left = (j > 0) ? matrix[i][j - 1] : 0;
+                int bottom = (i < n - 1) ? matrix[i + 1][j] : 0;
+                int right = (j < m - 1) ? matrix[i][j + 1] : 0;
+ 
+                int max_neighbor = max({top, left, bottom, right});
+                if (matrix[i][j] > max_neighbor) {
+                    new_matrix[i][j] = max_neighbor;
+                    changed = true;
+                }
+            }
+        }
+ 
+        matrix = new_matrix;
+    } while (changed);
+}
+ 
+void readMatrix(vector<vector<int>>& matrix, int n, int m) {
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            cin >> matrix[i][j];
+        }
+    }
+}
+ 
+void printMatrix(const vector<vector<int>>& matrix, int n, int m) {
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+ 
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, m;
+        cin >> n >> m;
+        vector<vector<int>> matrix(n, vector<int>(m));
+        
+        readMatrix(matrix, n, m);
+        stabilize(matrix, n, m);
+        printMatrix(matrix, n, m);
+    }
+    return 0;
+}
