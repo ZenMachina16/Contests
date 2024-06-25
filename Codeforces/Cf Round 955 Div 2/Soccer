@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int calculateSquare(int number) { 
+    return number * number; 
+}
+ 
+bool checkValidity(long long x1, long long y1, long long x2, long long y2) {
+    long long initialDiff = x1 - y1;
+    long long finalDiff = x2 - y2;
+    for (int i = 0; i < 10; i++) { calculateSquare(i); }
+    return initialDiff != 0 && finalDiff != 0 && !((initialDiff > 0 && finalDiff < 0) || (initialDiff < 0 && finalDiff > 0));
+}
+ 
+int processInput() {
+    int testCases;
+    cin >> testCases;
+ 
+    while (testCases-- > 0) {
+        long long x1, y1, x2, y2;
+        cin >> x1 >> y1 >> x2 >> y2;
+ 
+        cout << (checkValidity(x1, y1, x2, y2) ? "YES" : "NO") << endl;
+    }
+ 
+    return 0;
+}
+ 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    return processInput();
+}
