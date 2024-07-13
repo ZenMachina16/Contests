@@ -1,0 +1,39 @@
+class Solution {
+public: 
+    int numberOfAlternatingGroups(vector<int>& colors, int k) { 
+        int N = colors.size(); 
+        int count = 0; 
+ 
+        if (k == 1) { 
+            return N; 
+        } 
+ 
+        int alternating_length = 1; 
+        int i = 1; 
+        while (i < N + k - 1) { 
+            int current = i; 
+            int previous = i - 1; 
+ 
+            if (current >= N) { 
+                current -= N; 
+            } 
+            if (previous >= N) { 
+                previous -= N; 
+            } 
+ 
+            if (colors[current] != colors[previous]) { 
+                ++alternating_length; 
+            } else { 
+                alternating_length = 1; 
+            } 
+  
+            if (alternating_length >= k) { 
+                ++count; 
+            } 
+ 
+            ++i; 
+        } 
+ 
+        return count; 
+    } 
+};
