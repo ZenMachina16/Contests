@@ -1,0 +1,38 @@
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+ 
+int maxNo(int a, int b, int c) {
+    int bananas = a * b * c;
+    // Try all possible ways of distributing 5 increments
+    for (int i = 0; i <= 5; ++i) {
+        for (int j = 0; j <= 5 - i; ++j) {
+            int k = 5 - i - j;
+            int new_a = a + i;
+            int new_b = b + j;
+            int new_c = c + k;
+            bananas = max(bananas, new_a * new_b * new_c);
+        }
+    }
+    return bananas;
+}
+ 
+int main() {
+    int t;
+    cin >> t;
+    vector<int> results;
+    
+    for (int i = 0; i < t; ++i) {
+        int a, b, c;
+        cin >> a >> b >> c;
+        results.push_back(maxNo(a, b, c));
+    }
+    
+    for (const auto& result : results) {
+        cout << result << endl;
+    }
+    
+    return 0;
+}
