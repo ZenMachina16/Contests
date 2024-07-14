@@ -1,0 +1,35 @@
+class Solution {
+public:
+    long long minimumCost(int m, int n,vector<int>& horizontalCut,vector<int>& verticalCut) {
+        sort(horizontalCut.begin(), horizontalCut.end());
+        sort(verticalCut.begin(), verticalCut.end());
+
+        long long tc = 0;
+        int hS = 1, vS = 1;
+        int i = horizontalCut.size() - 1, j = verticalCut.size() - 1;
+
+        while (i >= 0 && j >= 0) {
+            if (horizontalCut[i] > verticalCut[j]) {
+                tc += static_cast<long long>(horizontalCut[i]) * vS;
+                hS++;
+                i--;
+            } else {
+                tc += static_cast<long long>(verticalCut[j]) * hS;
+                vS++;
+                j--;
+            }
+        }
+
+        while (i >= 0) {
+            tc += static_cast<long long>(horizontalCut[i]) * vS ;
+            i--;
+        }
+
+        while (j >= 0) {
+            tc += static_cast<long long>(verticalCut[j]) * hS;
+            j--;
+        }
+
+        return tc;
+    }
+};
