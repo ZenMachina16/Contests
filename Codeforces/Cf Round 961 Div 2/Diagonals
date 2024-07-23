@@ -1,0 +1,30 @@
+using namespace std;
+ 
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, k;
+        cin >> n >> k; 
+        int a = 0;
+        int steps = 1;
+        
+        while (k > 0) {
+            if (steps == 1) {
+                k -= n;
+            } else {
+                if (k > n - steps + 1) {
+                    a++;
+                    k = k - 2 * (n - steps + 1);
+                } else {
+                    k -= n - steps + 1;
+                }
+            }
+            a++;
+            steps++;
+        }
+        
+        cout << a << endl;
+    }
+    return 0;
+}
