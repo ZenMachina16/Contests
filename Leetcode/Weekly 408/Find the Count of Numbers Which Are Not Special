@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int nonSpecialCount(int l, int r) {
+        int count = r - l + 1;
+        int maxLimit = static_cast<int>(sqrt(r)) + 1;
+        std::vector<bool> isPrime(maxLimit + 1, true);
+        isPrime[0] = isPrime[1] = false;
+
+        for (int i = 2; i * i <= maxLimit; ++i) {
+            if (isPrime[i]) {
+                for (int j = i * i; j <= maxLimit; j += i) {
+                    isPrime[j] = false;
+                }
+            }
+        }
+
+        for (int i = 2; i <= maxLimit; ++i) {
+            if (isPrime[i]) {
+                long long square = static_cast<long long>(i) * i;
+                if (square >= l && square <= r) {
+                    --count;
+                }
+            }
+        }
+
+        return count;
+    }
+};
