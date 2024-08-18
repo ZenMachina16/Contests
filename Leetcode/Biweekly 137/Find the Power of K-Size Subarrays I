@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<int> resultsArray(vector<int>& nums, int k) {
+        int n = nums.size();
+        vector<int> arr(n - k + 1);
+        int k1 = 0;
+        int left = 0;
+        bool isConsecutive = true;
+
+        for (int right = 0; right < n; right++) {
+            if (right > left) {
+                if (nums[right] != nums[right - 1] + 1) {
+                    isConsecutive = false;
+                }
+            }
+            if (right - left + 1 == k) {
+                arr[k1] = isConsecutive ? nums[right] : -1;
+                k1++;
+
+                if (right - left + 1 == k) {
+                    if (left + 1 < n && nums[left] + 1 != nums[left + 1]) {
+                        isConsecutive = true;
+                        for (int i = left + 1; i < right; i++) {
+                            if (nums[i] + 1 != nums[i + 1]) {
+                                isConsecutive = false;
+                                break;
+                            }
+                        }
+                    }
+                    left++;
+                }
+            }
+        }
+        return arr;
+    }
+};
