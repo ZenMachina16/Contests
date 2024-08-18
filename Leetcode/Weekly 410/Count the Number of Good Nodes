@@ -1,0 +1,57 @@
+class Solution {
+public:
+    int countGoodNodes(vector<vector<int>>& edges) {
+        int n = edges.size() + 1;
+        vector<vector<int>> adj(n);
+        for (auto& edge : edges) {
+            int u = edge[0];
+            int v = edge[1];
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        
+        vector<int> subtreeSize(n, 0);
+        vector<bool> visited(n, false);
+        
+        calculateSubtreeSizes(0, adj, subtreeSize, visited);
+        
+        fill(visited.begin(), visited.end(), false);
+        int goodNodesCount = countGoodNodes(0, adj, subtreeSize, visited);
+        
+        return goodNodesCount;
+    }
+    
+private:
+    int calculateSubtreeSizes(int node, vector<vector<int>>& adj, vector<int>& subtreeSize, vector<bool>& visited) {
+        visited[node] = true;
+        int size = 1;
+        for (int neighbor : adj[node]) {
+            if (!visited[neighbor]) {
+                size += calculateSubtreeSizes(neighbor, adj, subtreeSize, visited);
+            }
+        }
+        subtreeSize[node] = size;
+        return size;
+    }
+    
+    int countGoodNodes(int node, vector<vector<int>>& adj, vector<int>& subtreeSize, vector<bool>& visited) {
+        visited[node] = true;
+        unordered_set<int> childSizes;
+        int goodNodesCount = 0;
+        
+        for (int neighbor : adj[node]) {
+            if (!visited[neighbor]) {
+                if (subtreeSize[neighbor] > 0) {
+                    childSizes.insert(subtreeSize[neighbor]);
+                }
+                goodNodesCount += countGoodNodes(neighbor, adj, subtreeSize, visited);
+            }
+        }
+        
+        if (childSizes.size() <= 1) {
+            goodNodesCount += 1;
+        }
+        
+        return goodNodesCount;
+    }
+};
