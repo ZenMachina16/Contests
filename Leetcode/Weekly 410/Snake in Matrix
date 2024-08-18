@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int finalPositionOfSnake(int n, vector<string>& commands) {
+        int count = 0;
+        for(int i = 0; i < commands.size(); i++){
+            if(commands[i] == "DOWN"){
+                count += n;
+            }
+            if(commands[i] == "UP"){
+                count -= n;
+            }
+            if(commands[i] == "RIGHT"){
+                count += 1;
+            }
+            if(commands[i] == "LEFT"){
+                count -= 1;
+            }
+        }
+        return count;
+    }
+};
